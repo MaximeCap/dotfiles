@@ -243,7 +243,6 @@ require('lazy').setup {
   -- keys can be used to configure plugin behavior/loading/etc.
   --
   -- Use `opts = {}` to force a plugin to be loaded.
-  --
   --  This is equivalent to:
   --    require('Comment').setup({})
 
@@ -518,6 +517,11 @@ require('lazy').setup {
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
           local client = vim.lsp.get_client_by_id(event.data.client_id)
+          --[[ if client.name == 'eslint' then
+            client.server_capabilities.documentFormattingProvider = true
+          elseif client.name == 'tsserver' then
+            client.server_capabilities.documentFormattingProvider = false
+          end ]]
           if client and client.server_capabilities.documentHighlightProvider then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
@@ -626,37 +630,87 @@ require('lazy').setup {
       }
     end,
   },
+  -- Linting
+  {
+    'mfussenegger/nvim-lint',
+    lazy = true,
+    event = { 'BufReadPre', 'BufNewFile' }, -- to disable, comment this out
+    config = function()
+      local lint = require 'lint'
 
-  { -- Autoformat
-    'stevearc/conform.nvim',
-    opts = {
-      notify_on_error = false,
-      format_on_save = {
-        timeout_ms = 500,
-        lsp_fallback = true,
-      },
-      formatters_by_ft = {
+      lint.linters_by_ft = {
         javascript = { 'eslint_d' },
         typescript = { 'eslint_d' },
         javascriptreact = { 'eslint_d' },
         typescriptreact = { 'eslint_d' },
-        svelte = { 'prettier' },
-        css = { 'prettier' },
-        html = { 'prettier' },
-        json = { 'prettier' },
-        yaml = { 'prettier' },
-        markdown = { 'prettier' },
-        graphql = { 'prettier' },
-        lua = { 'stylua' },
-        python = { 'isort', 'black' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
-      },
-    },
+        svelte = { 'eslint_d' },
+        python = { 'pylint' },
+      }
+
+      local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
+
+      vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
+        group = lint_augroup,
+        callback = function()
+          lint.try_lint()
+        end,
+      })
+
+      vim.keymap.set('n', '<leader>l', function()
+        lint.try_lint()
+      end, { desc = 'Trigger linting for current file' })
+    end,
+  },
+
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufReadPre', 'BufNewFile' },
+    config = true,
+    config = function(_, opts)
+      local util = require 'conform.util'
+      require('conform').setup {
+        log_level = vim.log.levels.DEBUG,
+        formatters = {
+          eslint_d = {
+            meta = {
+              url = 'https://github.com/mantoni/eslint_d.js/',
+              description = 'Like ESLint, but faster.',
+            },
+            command = util.from_node_modules 'eslint_d',
+            args = { '--fix-to-stdout', '--stdin', '--stdin-filename', '$FILENAME' },
+            cwd = util.root_file {
+              'package.json',
+            },
+          },
+        },
+        notify_on_error = true,
+        format_on_save = {
+          timeout_ms = 500,
+          async = false,
+          lsp_fallback = true,
+        },
+        formatters_by_ft = {
+          javascript = { 'eslint_d' },
+          typescript = { 'eslint_d' },
+          javascriptreact = { 'eslint_d' },
+          typescriptreact = { 'eslint_d' },
+          svelte = { 'prettier' },
+          css = { 'prettier' },
+          html = { 'prettier' },
+          json = { 'prettier' },
+          yaml = { 'prettier' },
+          markdown = { 'prettier' },
+          graphql = { 'prettier' },
+          lua = { 'stylua' },
+          -- Conform can also run multiple formatters sequentially
+          -- python = { "isort", "black" },
+          --
+          -- You can use a sub-list to tell conform to run *until* a formatter
+          -- is found.
+          -- javascript = { { "prettierd", "prettier" } },
+        },
+      }
+    end,
   },
 
   { -- Autocompletion
