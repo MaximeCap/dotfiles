@@ -148,6 +148,11 @@ vim.opt.cursorline = true
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
 
+-- Folding
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+vim.opt.foldlevel = 99
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
@@ -559,6 +564,8 @@ require('lazy').setup {
         dockerls = {},
         graphql = {},
         docker_compose_language_service = {},
+        tailwindcss = {},
+        emmet_language_server = {},
         -- clangd = {},
         -- gopls = {},
         -- pyright = {},
@@ -802,6 +809,14 @@ require('lazy').setup {
           { name = 'luasnip' },
           { name = 'path' },
         },
+        formatting = {
+          format = function(entry, vim_item)
+            if entry.source.name == 'html-css' then
+              vim_item.menu = entry.completion_item.menu
+            end
+            return vim_item
+          end,
+        },
       }
     end,
   },
@@ -821,7 +836,7 @@ require('lazy').setup {
           light = 'latte',
           dark = 'macchiato',
         },
-        transparent_background = true, -- disables setting the background color.
+        transparent_background = false, -- disables setting the background color.
         show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
         term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
         integrations = {
@@ -889,7 +904,7 @@ require('lazy').setup {
 
       ---@diagnostic disable-next-line: missing-fields
       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc' },
+        ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'css' },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = { enable = true },
