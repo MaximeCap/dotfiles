@@ -826,11 +826,11 @@ require('lazy').setup {
     -- change the command in the config to whatever the name of that colorscheme is
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'catppuccin/nvim',
+    'savq/melange-nvim',
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      require('catppuccin').setup {
+      --[[ require('catppuccin').setup {
         flavour = 'latte', -- latte, frappe, macchiato, mocha
         background = { -- :h background
           light = 'latte',
@@ -846,10 +846,12 @@ require('lazy').setup {
           treesitter = true,
           -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },
-      }
+      } ]]
+
+      vim.opt.termguicolors = true
 
       -- Load the colorscheme here
-      vim.cmd.colorscheme 'catppuccin-macchiato'
+      vim.cmd.colorscheme 'melange'
 
       -- You can configure highlights by doing something like
       vim.cmd.hi 'Comment gui=none'
@@ -898,6 +900,9 @@ require('lazy').setup {
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'windwp/nvim-ts-autotag',
+    },
     build = ':TSUpdate',
     config = function()
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
@@ -907,6 +912,9 @@ require('lazy').setup {
         ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'css' },
         -- Autoinstall languages that are not installed
         auto_install = true,
+        autotag = {
+          enable = true,
+        },
         highlight = { enable = true },
         indent = { enable = true },
       }
