@@ -140,32 +140,7 @@ return {
     main = 'ibl',
     opts = {},
     config = function()
-      local highlight = {
-        'CursorColumn',
-        'Whitespace',
-      }
-      require('ibl').setup {
-        indent = { highlight = highlight, char = '' },
-        whitespace = {
-          highlight = highlight,
-          remove_blankline_trail = false,
-        },
-        scope = { enabled = false },
-      }
+      require('ibl').setup()
     end,
-  },
-  {
-    'f-person/auto-dark-mode.nvim',
-    config = {
-      update_interval = 1000,
-      set_dark_mode = function()
-        vim.api.nvim_set_option('background', 'dark')
-        vim.cmd 'colorscheme gruvbox'
-      end,
-      set_light_mode = function()
-        vim.api.nvim_set_option('background', 'light')
-        vim.cmd 'colorscheme gruvbox'
-      end,
-    },
   },
 }

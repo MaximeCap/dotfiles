@@ -672,8 +672,7 @@ require('lazy').setup {
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
-    config = true,
-    config = function(_, opts)
+    config = function(_)
       local util = require 'conform.util'
       require('conform').setup {
         log_level = vim.log.levels.DEBUG,
@@ -826,19 +825,19 @@ require('lazy').setup {
     -- change the command in the config to whatever the name of that colorscheme is
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'savq/melange-nvim',
+    'catppuccin/nvim',
     lazy = false, -- make sure we load this during startup if it is your main colorscheme
     priority = 1000, -- make sure to load this before all the other start plugins
     config = function()
-      --[[ require('catppuccin').setup {
-        flavour = 'latte', -- latte, frappe, macchiato, mocha
+      require('catppuccin').setup {
+        flavour = 'auto', -- latte, frappe, macchiato, mocha
         background = { -- :h background
           light = 'latte',
-          dark = 'macchiato',
+          dark = 'mocha',
         },
-        transparent_background = false, -- disables setting the background color.
+        transparent_background = true, -- disables setting the background color.
         show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
-        term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
+        term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
         integrations = {
           cmp = true,
           gitsigns = true,
@@ -846,15 +845,8 @@ require('lazy').setup {
           treesitter = true,
           -- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
         },
-      } ]]
-
-      vim.opt.termguicolors = true
-
-      -- Load the colorscheme here
-      vim.cmd.colorscheme 'melange'
-
-      -- You can configure highlights by doing something like
-      vim.cmd.hi 'Comment gui=none'
+      }
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -900,10 +892,10 @@ require('lazy').setup {
 
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
     dependencies = {
       'windwp/nvim-ts-autotag',
     },
-    build = ':TSUpdate',
     config = function()
       -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 

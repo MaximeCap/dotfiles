@@ -29,5 +29,13 @@ return {
       cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
     end,
   },
-  {},
+  {
+    'wuelnerdotexe/vim-astro',
+    ft = 'astro',
+    init = function()
+      -- Astro configuration variables.
+      vim.g.astro_typescript = 'enable'
+      vim.g.astro_stylus = 'disable'
+    end,
+  },
 }
