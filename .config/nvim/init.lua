@@ -743,6 +743,8 @@ require('lazy').setup {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'onsails/lspkind.nvim',
 
       -- If you want to add a bunch of pre-configured snippets,
       --    you can use this plugin to help you. It even has snippets
@@ -754,6 +756,7 @@ require('lazy').setup {
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require 'lspkind'
       luasnip.config.setup {}
 
       cmp.setup {
@@ -809,12 +812,16 @@ require('lazy').setup {
           { name = 'path' },
         },
         formatting = {
-          format = function(entry, vim_item)
+          format = lspkind.cmp_format {
+            maxwidth = 50,
+            ellipsis_char = '...',
+          },
+          --[[ format = function(entry, vim_item)
             if entry.source.name == 'html-css' then
               vim_item.menu = entry.completion_item.menu
             end
             return vim_item
-          end,
+          end, ]]
         },
       }
     end,
@@ -835,7 +842,7 @@ require('lazy').setup {
           light = 'latte',
           dark = 'mocha',
         },
-        transparent_background = true, -- disables setting the background color.
+        transparent_background = true, -- disables settrng the background color.
         show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
         term_colors = true, -- sets terminal colors (e.g. `g:terminal_color_0`)
         integrations = {

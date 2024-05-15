@@ -30,6 +30,13 @@ return {
     end,
   },
   {
+    'ray-x/lsp_signature.nvim',
+    opts = {},
+    config = function(_, opts)
+      require('lsp_signature').setup(opts)
+    end,
+  },
+  {
     'wuelnerdotexe/vim-astro',
     ft = 'astro',
     init = function()

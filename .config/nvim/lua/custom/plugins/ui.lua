@@ -143,4 +143,24 @@ return {
       require('ibl').setup()
     end,
   },
+  {
+    'FabianWirth/search.nvim',
+    dependencies = { 'nvim-telescope/telescope.nvim' },
+    config = function()
+      local builtin = require 'telescope.builtin'
+      local search = require 'search'
+      search.setup {
+        append_tabs = { -- append_tabs will add the provided tabs to the default ones
+          {
+            'Commits', -- or name = "Commits"
+            builtin.git_commits, -- or tele_func = require('telescope.builtin').git_commits
+            available = function() -- optional
+              return vim.fn.isdirectory '.git' == 1
+            end,
+          },
+        },
+      }
+      vim.keymap.set('n', '<leader><leader>', search.open, { desc = 'Open search' })
+    end,
+  },
 }
