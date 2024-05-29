@@ -12,7 +12,18 @@ blur = true
 
 option_as_alt = "Both"
 
-[font]
-normal.family = "MesloLGS NF"
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "bold"
 
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+
+
+[font]
 size = 14

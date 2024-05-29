@@ -45,4 +45,10 @@ return {
       vim.g.astro_stylus = 'disable'
     end,
   },
+  {
+    'barrett-ruth/live-server.nvim',
+    build = 'pnpm add -g live-server',
+    cmd = { 'LiveServerStart', 'LiveServerStop' },
+    config = true,
+  },
 }
