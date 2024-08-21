@@ -18,3 +18,7 @@ brew "zoxide"
 
 # Install stow for symlink
 brew "stow"
+
+# Install eazygit
+brew install "lazygit"
+

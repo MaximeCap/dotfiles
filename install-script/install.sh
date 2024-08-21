@@ -5,6 +5,7 @@
 sudo rm -rf ~/.vim > /dev/null 2>&1
 sudo rm -rf ~/.zshrc > /dev/null 2>&1
 sudo rm -rf ~/.config > /dev/null 2>&1
+sudo rm -rf ~/.p10k.zsh > /dev/null 2>&1
 
 #==============
 # Install all the packages
