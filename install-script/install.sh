@@ -17,6 +17,10 @@ brew update
 
 brew bundle --file=~/dotfiles/brew/Brewfile
 
-# Init stow symlinks
+# Clone plugins
+git clone https://github.com/tmux-plugins/tpm ~/dotfiles/tmux/plugins/tpm
 cd ~/dotfiles
+./../.config/tmux/plugins/tpm/scripts/install_plugins.sh
+
+# Init stow symlinks
 stow .
