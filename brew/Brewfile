@@ -20,5 +20,5 @@ brew "zoxide"
 brew "stow"
 
 # Install eazygit
-brew install "lazygit"
+brew "lazygit"
 
