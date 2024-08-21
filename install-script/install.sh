@@ -7,8 +7,10 @@ source ~/dotfiles/utils/spinner.sh
 sudo rm -rf ~/.vim > /dev/null 2>&1 
 sudo rm -rf ~/.zshrc > /dev/null 2>&1 
 sudo rm -rf ~/.config > /dev/null 2>&1 
+sudo rm -rf ~/.oh-my-zsh > /dev/null 2>&1
 sudo rm -rf ~/.p10k.zsh > /dev/null 2>&1 
 sudo rm -rf ~/.local/state/nvim ~/.local/share/nvim > /dev/null 2>&1 
+sudo rm -rf ~/.local/share/zinit > /dev/null 2>&1
 
 #==============
 # Install all the packages
@@ -25,7 +27,9 @@ brew bundle --file=~/dotfiles/brew/Brewfile &
 spin $!
 
 # Init stow symlinks
+cd ~/dotfiles
 stow .
+exec zsh
 
 # Clone plugins
 tmpDir="~/dotfiles/.config/tmux/plugins/tpm"
