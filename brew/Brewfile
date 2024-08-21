@@ -1,0 +1,20 @@
+# Install git
+brew "git"
+
+# Install tmux
+brew "tmux"
+
+# Install wezterm
+cask "wezterm"
+
+# Install nvim
+brew "nvim"
+
+# Install nvm
+brew "nvm"
+
+# Install zoxide
+brew "zoxide"
+
+# Install stow for symlink
+brew "stow"
