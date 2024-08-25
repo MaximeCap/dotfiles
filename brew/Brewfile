@@ -1,5 +1,20 @@
+# Install Font
+tap "homebrew/cask-fonts"
+
+# Set args for all 'brew install --cask' commands
+cask_args appdir: "~/Applications", require_sha: true
+
+# Download font
+cask font-jetbrains-mono
+
 # Install git
 brew "git"
+
+# Install zsh
+brew "zsh"
+
+# Install ripgrep
+brew "ripgrep"
 
 # Install tmux
 brew "tmux"
@@ -22,3 +37,5 @@ brew "stow"
 # Install eazygit
 brew "lazygit"
 
+# Install Gum for beautify Scripting
+brew "gum"

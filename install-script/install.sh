@@ -17,14 +17,14 @@ sudo rm -rf ~/.local/share/zinit > /dev/null 2>&1
 #==============
 echo "Installing Brew ..."
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &
-brew doctor &
-brew update &
-spin $!
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" 
+(echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> /Users/maxime.cappellen/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+brew doctor 
+brew update 
+brew install gum
 
-echo "Brewing ..."
-brew bundle --file=~/dotfiles/brew/Brewfile &
-spin $!
+gum spin --spinner dot --title "Bundling the Brewfile ..." -- brew bundle --file=~/dotfiles/brew/Brewfile
 
 # Init stow symlinks
 cd ~/dotfiles
