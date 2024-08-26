@@ -2,6 +2,14 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 vim.keymap.del("n", "<leader>e")
+vim.keymap.del("n", "<leader>E")
+vim.keymap.del("n", "<leader>`")
+vim.keymap.del("n", "<leader>|")
+vim.keymap.del("n", "<leader>K")
+vim.keymap.del("n", "<leader>L")
+vim.keymap.del("n", "<leader>,")
+vim.keymap.del("n", "<leader>?")
+vim.keymap.del("n", "<leader>w")
 
 -- Page up and down + center
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
