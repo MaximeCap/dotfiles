@@ -176,7 +176,9 @@ return {
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				eslint = {
-					root_dir = get_root_dir(),
+					root_dir = function(fname)
+						return get_root_dir(fname)
+					end,
 					filetypes = {
 						"typescript",
 						"javascript",
@@ -187,7 +189,7 @@ return {
 					},
 					single_file_support = true,
 					on_attach = function(_, bufnr)
-						vim.api.nvim_create_autocmd("BufWritePre", {
+						vim.api.nvim_create_autocmd({ "BufWritePre", "BufWritePost" }, {
 							buffer = bufnr,
 							command = "EslintFixAll",
 						})

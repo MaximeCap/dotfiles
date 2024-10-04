@@ -197,7 +197,7 @@ return {
 				typescript = { "eslint" },
 				javascriptreact = { "eslint" },
 				typescriptreact = { "eslint" }, ]]
-				svelte = { "eslint" },
+				svelte = { "eslint_d" },
 				yaml = { "yamllint" },
 				docker = { "hadolint" },
 				go = { "golangcilint" },
