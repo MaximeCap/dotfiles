@@ -140,6 +140,7 @@ return {
 			end,
 		},
 	},
+	{ "echasnovski/mini-git", version = "*", main = "mini.git" },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
