@@ -27,6 +27,7 @@
           pkgs.zoxide
           pkgs.ripgrep
           pkgs.lazygit
+          pkgs.fzf
         ];
 
       homebrew = {
@@ -61,6 +62,17 @@
             ${pkgs.mkalias}/bin/mkalias "$src" "/Applications/Nix Apps/$app_name"
           done
         '';
+
+      system.defaults = {
+        dock.autohide = true;
+        dock.persistent-apps = [
+          "/Applications/Arc.app"
+          "${inputs.wezterm-flake.packages.${pkgs.system}.default}/Applications/WezTerm.app"
+          "/System/Applications/Mail.app"
+          "/System/Applications/Calendar.app"
+        ];
+        finder.FXPreferredViewStyle = "clmv";
+      };
 
       # Auto upgrade nix package and the daemon service.
       services.nix-daemon.enable = true;
