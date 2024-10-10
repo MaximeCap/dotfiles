@@ -1,3 +1,6 @@
 brew/Brewfile.lock.json
 .config/nvim/lazy-lock.json
 .config/github-copilot
+.config/linearmouse
+.config/neofetch
+.config/tmux/plugins/**
