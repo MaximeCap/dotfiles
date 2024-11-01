@@ -20,11 +20,7 @@ return {
 			local luasnip = require("luasnip")
 
 			local lspkind = require("lspkind")
-
-			-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
-			require("luasnip.loaders.from_vscode").lazy_load()
-
-			cmp.setup({
+			local options = {
 				completion = {
 					completeopt = "menu,menuone,preview,noselect",
 				},
@@ -55,7 +51,13 @@ return {
 						ellipsis_char = "...",
 					}),
 				},
-			})
+			}
+
+			-- loads vscode style snippets from installed plugins (e.g. friendly-snippets)
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			options = vim.tbl_deep_extend("force", options, require("nvchad.cmp"))
+			cmp.setup(options)
 		end,
 	},
 	{
@@ -155,11 +157,11 @@ return {
 
 			conform.setup({
 				formatters_by_ft = {
-					javascript = { "eslint" },
-					typescript = { "eslint" },
-					javascriptreact = { "eslint" },
-					typescriptreact = { "eslint" },
-					svelte = { "prettier" },
+					javascript = { "biome" },
+					typescript = { "biome" },
+					javascriptreact = { "biome" },
+					typescriptreact = { "biome" },
+					svelte = { "biome" },
 					css = { "prettier" },
 					html = { "prettier" },
 					json = { "prettier" },
@@ -193,11 +195,11 @@ return {
 			local lint = require("lint")
 
 			lint.linters_by_ft = {
-				--[[ javascript = { "eslint" },
-				typescript = { "eslint" },
-				javascriptreact = { "eslint" },
-				typescriptreact = { "eslint" }, ]]
-				svelte = { "eslint_d" },
+				javascript = { "biomejs" },
+				typescript = { "biomejs" },
+				javascriptreact = { "biomejs" },
+				typescriptreact = { "biomejs" },
+				svelte = { "biomejs" },
 				yaml = { "yamllint" },
 				docker = { "hadolint" },
 				go = { "golangcilint" },

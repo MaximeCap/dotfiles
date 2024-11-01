@@ -69,9 +69,17 @@ zstyle ':completion:*' menu no
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
 zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
+# go
+export GOPATH=$HOME/golang
+export GOROOT="$(brew --prefix golang)/libexec"
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
+
 # Aliases
 alias ls='ls --color'
 alias config="/usr/bin/git --git-dir=${HOME}/dotfiles/ --work-tree=${HOME}"
+#alias air=$(go env GOPATH)/bin/air
+
 
 # Shell integrations
 eval "$(fzf --zsh)"

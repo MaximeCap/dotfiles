@@ -33,6 +33,29 @@ return {
 		"mfussenegger/nvim-dap",
 		dependencies = {
 			{
+				"leoluz/nvim-dap-go",
+				ft = "go",
+				opts = {
+					dap_configurations = {
+						{
+							type = "go",
+							name = "Attach remote",
+							mode = "remote",
+							request = "attach",
+						},
+					},
+					delve = {
+						path = "dlv",
+						initialize_timeout_sec = 20,
+						port = "${port}",
+					},
+				},
+				config = function(_, opts)
+					local dapGo = require("dap-go")
+					dapGo.setup(opts)
+				end,
+			},
+			{
 				"mxsdev/nvim-dap-vscode-js",
 				dependencies = {
 					"microsoft/vscode-js-debug",
@@ -82,9 +105,9 @@ return {
 			table.insert(vim._so_trails, "/?.dylib")
 			local keymap = vim.keymap
 			local dap = require("dap")
-			keymap.set("n", "<Leader>di", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
-			keymap.set("n", "<Leader>ds", ':lua require("dap").continue()<CR>', { desc = "Continue" })
-			keymap.set("n", "<Leader>dS", ':lua require("dap").disconnect()<CR>', { desc = "Disconnect" })
+			keymap.set("n", "<Leader>db", dap.toggle_breakpoint, { desc = "Toggle breakpoint" })
+			keymap.set("n", "<Leader>dc", ':lua require("dap").continue()<CR>', { desc = "Continue" })
+			keymap.set("n", "<Leader>dC", ':lua require("dap").disconnect()<CR>', { desc = "Disconnect" })
 			keymap.set("n", "<Leader>dn", ':lua require("dap").step_over()<CR>', { desc = "Step Over" })
 			keymap.set("n", "<Leader>dN", ':lua require("dap").step_into()<CR>', { desc = "Step Into" })
 			keymap.set("n", "<Leader>do", ':lua require("dap").step_out()<CR>', { desc = "Step Out" })

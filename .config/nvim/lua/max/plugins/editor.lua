@@ -174,10 +174,6 @@ return {
     },
 	},
 	{
-		"NvChad/nvim-colorizer.lua",
-		config = true,
-	},
-	{
 		"jinh0/eyeliner.nvim",
 		config = function()
 			require("eyeliner").setup({
@@ -211,5 +207,35 @@ return {
 	},
 	{
 		"RRethy/vim-illuminate",
+	},
+	{
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		config = function()
+			local harpoon = require("harpoon")
+			harpoon.setup()
+
+			vim.keymap.set("n", "<leader>oa", function()
+				harpoon:list():add()
+			end, { desc = "Add to Harp[o]on list" })
+
+			vim.keymap.set("n", "<leader>ol", function()
+				harpoon.ui:toggle_quick_menu(harpoon:list())
+			end, { desc = "Toggle Harp[o]on list" })
+
+			vim.keymap.set("n", "<leader>oq", function()
+				harpoon:list():select(1)
+			end)
+			vim.keymap.set("n", "<leader>ow", function()
+				harpoon:list():select(2)
+			end)
+			vim.keymap.set("n", "<leader>oe", function()
+				harpoon:list():select(3)
+			end)
+			vim.keymap.set("n", "<leader>or", function()
+				harpoon:list():select(4)
+			end)
+		end,
 	},
 }

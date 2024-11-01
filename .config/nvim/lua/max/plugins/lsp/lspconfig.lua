@@ -1,5 +1,13 @@
 return {
 	{
+		"MysticalDevil/inlay-hints.nvim",
+		event = "LspAttach",
+		dependencies = { "neovim/nvim-lspconfig" },
+		config = function()
+			require("inlay-hints").setup()
+		end,
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
@@ -166,7 +174,21 @@ return {
 			end
 			local servers = {
 				-- clangd = {},
-				-- gopls = {},
+				gopls = {
+					settings = {
+						gopls = {
+							hints = {
+								rangeVariableTypes = true,
+								parameterNames = true,
+								constantValues = true,
+								assignVariableTypes = true,
+								compositeLiteralFields = true,
+								compositeLiteralTypes = true,
+								functionTypeParameters = true,
+							},
+						},
+					},
+				},
 				-- pyright = {},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -175,7 +197,7 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
-				eslint = {
+				--[[ eslint = {
 					root_dir = function(fname)
 						return get_root_dir(fname)
 					end,
@@ -194,16 +216,16 @@ return {
 							command = "EslintFixAll",
 						})
 					end,
-				},
+				}, ]]
 				ts_ls = {
 					single_file_support = true,
 					settings = {
 						typescript = {
 							inlayHints = {
-								includeInlayParameterNameHints = "literal",
-								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = true,
 								includeInlayFunctionParameterTypeHints = true,
-								includeInlayVariableTypeHints = false,
+								includeInlayVariableTypeHints = true,
 								includeInlayPropertyDeclarationTypeHints = true,
 								includeInlayFunctionLikeReturnTypeHints = true,
 								includeInlayEnumMemberValueHints = true,
@@ -228,7 +250,13 @@ return {
 					root_dir = get_root_dir,
 				},
 				dockerls = {},
-				sqlls = {},
+				sqlls = {
+					root_dir = function(fname)
+						local t = get_root_dir(fname)
+						print(t)
+						return t
+					end,
+				},
 				jsonls = {},
 				helm_ls = {
 					settings = {
@@ -256,6 +284,15 @@ return {
 							additionalValuesFilesGlobPattern = "values*.yaml",
 						},
 					},
+				},
+				biome = {
+					root_dir = function(fname)
+						local util = require("lspconfig.util")
+						local test = util.root_pattern("biome.json", "biome.jsonc")(fname) or util.path.dirname(fname)
+						print(test)
+
+						return test
+					end,
 				},
 				lua_ls = {
 					-- cmd = {...},
@@ -300,6 +337,7 @@ return {
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
+				"sqlls",
 				"ts_ls",
 				"gopls",
 				"golangci-lint",
@@ -321,8 +359,8 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"hadolint",
-				"eslint",
 				"yamllint",
+				"biome",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 

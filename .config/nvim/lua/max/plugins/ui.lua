@@ -245,7 +245,11 @@ return {
 
 			telescope.setup({
 				defaults = {
+					sorting_strategy = "ascending",
 					path_display = { "smart" },
+					layout_config = {
+						prompt_position = "top",
+					},
 				},
 			})
 
@@ -254,6 +258,7 @@ return {
 	},
 	{
 		"nvim-lualine/lualine.nvim",
+		enabled = false,
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
@@ -356,6 +361,9 @@ return {
 					},
 				},
 				lsp = {
+					signature = {
+						enabled = false,
+					},
 					-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 					override = {
 						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
