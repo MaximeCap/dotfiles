@@ -1,6 +1,7 @@
 return {
 	{
 		"nvim-neo-tree/neo-tree.nvim",
+		enabled = true,
 		branch = "v3.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -29,6 +30,7 @@ return {
 		},
 		cmd = "Neotree",
 		init = function()
+			vim.o.laststatus = 3
 			-- the remote file handling part
 			vim.api.nvim_create_autocmd("BufEnter", {
 				group = vim.api.nvim_create_augroup("RemoteFileInit", { clear = true }),
@@ -349,6 +351,9 @@ return {
 			"rcarriga/nvim-notify",
 		},
 		config = function()
+			require("notify").setup({
+				background_colour = "#000000",
+			})
 			require("noice").setup({
 				routes = {
 					{
