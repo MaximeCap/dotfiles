@@ -1,37 +1,5 @@
 return {
 	{
-		"nvimdev/dashboard-nvim",
-		event = "VimEnter",
-		config = function()
-			require("dashboard").setup({
-				theme = "hyper",
-				config = {
-					week_header = {
-						enable = true,
-					},
-					shortcut = {
-						{ desc = "󰊳 Update", group = "@property", action = "Lazy update", key = "u" },
-						{
-							icon = " ",
-							icon_hl = "@variable",
-							desc = "Files",
-							group = "Label",
-							action = "Telescope find_files",
-							key = "f",
-						},
-						{
-							desc = " dotfiles",
-							group = "Number",
-							action = "Telescope dotfiles",
-							key = "d",
-						},
-					},
-				},
-			})
-		end,
-		dependencies = { { "nvim-tree/nvim-web-devicons" } },
-	},
-	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufreadPre", "BufNewFile" },
 		build = ":TSUpdate",
@@ -166,41 +134,9 @@ return {
 		opts = {},
     -- stylua: ignore
     keys = {
-      { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
+      { "f",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
       { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
-      { "r",     mode = "o",               function() require("flash").remote() end,            desc = "Remote Flash" },
-      { "R",     mode = { "o", "x" },      function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
-      { "<c-s>", mode = { "c" },           function() require("flash").toggle() end,            desc = "Toggle Flash Search" },
     },
-	},
-	{
-		"jinh0/eyeliner.nvim",
-		config = function()
-			require("eyeliner").setup({
-				-- show highlights only after keypress
-				highlight_on_key = true,
-
-				-- dim all other characters if set to true (recommended!)
-				dim = true,
-				-- set the maximum number of characters eyeliner.nvim will check from
-				-- your current cursor position; this is useful if you are dealing with
-				-- large files: see https://github.com/jinh0/eyeliner.nvim/issues/41
-				max_length = 9999,
-
-				-- filetypes for which eyeliner should be disabled;
-				-- e.g., to disable on help files:
-				-- disable_filetypes = {"help"}
-				disable_filetypes = {},
-
-				-- buftypes for which eyeliner should be disabled
-				-- e.g., disable_buftypes = {"nofile"}
-				disable_buftypes = {},
-
-				-- add eyeliner to f/F/t/T keymaps;
-				-- see section on advanced configuration for more information
-				default_keymaps = true,
-			})
-		end,
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",

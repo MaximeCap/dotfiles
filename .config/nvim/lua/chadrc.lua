@@ -14,6 +14,30 @@ M.ui = {
 	},
 }
 
+M.nvdash = {
+	load_on_startup = true,
+
+	header = {
+		"                            ",
+		"     ▄▄         ▄ ▄▄▄▄▄▄▄   ",
+		"   ▄▀███▄     ▄██ █████▀    ",
+		"   ██▄▀███▄   ███           ",
+		"   ███  ▀███▄ ███           ",
+		"   ███    ▀██ ███           ",
+		"   ███      ▀ ███           ",
+		"   ▀██ █████▄▀█▀▄██████▄    ",
+		"     ▀ ▀▀▀▀▀▀▀ ▀▀▀▀▀▀▀▀▀▀   ",
+		"                            ",
+		"     Powered By  eovim    ",
+		"                            ",
+	},
+
+	buttons = {
+		{ txt = "  Find File", keys = "Spc Spc", cmd = "Telescope find_files" },
+		-- more... check nvconfig.lua file for full list of buttons
+	},
+}
+
 M.colorify = {
 	enabled = true,
 	mode = "virtual", -- fg, bg, virtual

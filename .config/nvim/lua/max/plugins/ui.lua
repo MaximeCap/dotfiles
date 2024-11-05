@@ -69,10 +69,10 @@ return {
 				function()
 					require("neo-tree.command").execute({ toggle = true, dir = vim.uv.cwd() })
 				end,
-				desc = "Explorer NeoTree (cwd)",
+				desc = "Toggle NeoTree",
 			},
 			{
-				"<leader>ge",
+				"<leader>eg",
 				function()
 					require("neo-tree.command").execute({ source = "git_status", toggle = true })
 				end,
@@ -80,6 +80,14 @@ return {
 			},
 		},
 		opts = {
+			event_handlers = {
+				{
+					event = "file_open_requested",
+					handler = function()
+						require("neo-tree.command").execute({ action = "close" })
+					end,
+				},
+			},
 			sources = { "filesystem", "buffers", "git_status" },
 			open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
 			filesystem = {
@@ -137,16 +145,16 @@ return {
 			spec = {
 				{
 					mode = { "n", "v" },
-					{ "<leader>d", group = "code" },
-					{ "<leader>c", group = "code" },
-					{ "<leader>e", group = "file/find" },
-					{ "<leader>g", group = "git" },
-					{ "<leader>gh", group = "hunks" },
-					{ "<leader>q", group = "quit/session" },
-					{ "<leader>s", group = "search" },
+					{ "<leader>d", group = "[D]ebug" },
+					{ "<leader>c", group = "[C]ode" },
+					{ "<leader>e", group = "[E]xplorer" },
+					{ "<leader>g", group = "[G]it" },
+					{ "<leader>s", group = "[S]earch" },
 					{ "<leader>t", group = "[T]odo Comments" },
-					{ "<leader>w", group = "Window" },
+					{ "<leader>w", group = "[W]indow" },
+					{ "<leader>a", group = "[A]I stuff" },
 					{ "<leader>x", group = "Trouble" },
+					{ "<leader>o", group = "Harp[o]on" },
 					{ "[", group = "prev" },
 					{ "]", group = "next" },
 					{ "g", group = "goto" },
@@ -156,7 +164,6 @@ return {
 			},
 		},
 	},
-	{ "MunifTanjim/nui.nvim", lazy = true },
 
 	{
 		"echasnovski/mini.icons",
@@ -256,48 +263,6 @@ return {
 			})
 
 			telescope.load_extension("fzf")
-		end,
-	},
-	{
-		"nvim-lualine/lualine.nvim",
-		enabled = false,
-		dependencies = {
-			"nvim-tree/nvim-web-devicons",
-		},
-		config = function()
-			local lualine = require("lualine")
-			local lazy_status = require("lazy.status")
-
-			lualine.setup({
-				extensions = { "neo-tree", "lazy" },
-				options = {
-					theme = "catppuccin",
-					globalstatus = vim.o.laststatus == 3,
-					disabled_filetypes = { statusline = { "neo-tree", "alpha" } },
-					component_separators = "",
-					section_separators = { left = "", right = "" },
-				},
-				sections = {
-					lualine_a = { { "mode", separator = { left = "" }, right_padding = 2 } },
-					lualine_b = { "filename", "branch", "diff" },
-					lualine_c = { "diagnostics" },
-					lualine_x = {
-						{
-							lazy_status.updates,
-							cond = lazy_status.has_updates,
-							color = { fg = "#ff9e64" },
-						},
-					},
-					lualine_y = { "filetype" },
-					lualine_z = {
-						{
-							"location",
-							separator = { right = "" },
-							left_padding = 2,
-						},
-					},
-				},
-			})
 		end,
 	},
 	{
