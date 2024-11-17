@@ -156,33 +156,38 @@ return {
 			local conform = require("conform")
 
 			conform.setup({
+				log_level = vim.log.levels.TRACE,
 				formatters_by_ft = {
-					javascript = { "biome" },
-					typescript = { "biome" },
-					javascriptreact = { "biome" },
-					typescriptreact = { "biome" },
+					javascript = { "eslint_d" },
+					typescript = { "eslint_d" },
+					javascriptreact = { "eslint_d" },
+					typescriptreact = { "eslint_d" },
 					svelte = { "biome" },
 					css = { "prettier" },
-					html = { "prettier" },
 					json = { "prettier" },
+					html = { "prettier" },
 					yaml = { "prettier" },
 					markdown = { "prettier" },
-					graphql = { "prettier" },
 					lua = { "stylua" },
+					graphql = { "prettier" },
 					docker = { "hadolint" },
 					go = { "goimports", "gofmt" },
 				},
 				format_on_save = {
-					lsp_fallback = false,
-					async = false,
+					lsp_format = "fallback",
 					timeout_ms = 1000,
+				},
+				formatters = {
+					eslint = {
+						lsp_format = "prefer",
+					},
 				},
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
 				conform.format({
-					lsp_fallback = true,
-					async = false,
+					lsp_format = "fallback",
+					async = true,
 					timeout_ms = 1000,
 				})
 			end, { desc = "Format file or range (in visual mode)" })
@@ -195,11 +200,11 @@ return {
 			local lint = require("lint")
 
 			lint.linters_by_ft = {
-				javascript = { "biomejs" },
-				typescript = { "biomejs" },
-				javascriptreact = { "biomejs" },
-				typescriptreact = { "biomejs" },
-				svelte = { "biomejs" },
+				--[[ javascript = { "eslint_d" },
+				typescript = { "eslint_d" },
+				javascriptreact = { "eslint_d" },
+				typescriptreact = { "estlint_d" }, ]]
+				svelte = { "eslint_d" },
 				yaml = { "yamllint" },
 				docker = { "hadolint" },
 				go = { "golangcilint" },
@@ -210,7 +215,9 @@ return {
 			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
 				group = lint_augroup,
 				callback = function()
-					lint.try_lint()
+					local get_clients = vim.lsp.get_clients
+					local client = get_clients({ bufnr = 0 })[1] or {}
+					lint.try_lint(nil, { cwd = client.root_dir })
 				end,
 			})
 

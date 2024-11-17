@@ -1,4 +1,5 @@
 return {
+	"mg979/vim-visual-multi",
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufreadPre", "BufNewFile" },

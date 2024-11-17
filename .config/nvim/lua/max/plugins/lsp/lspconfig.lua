@@ -140,7 +140,7 @@ return {
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
 			local get_root_dir = function(fname)
 				local util = require("lspconfig.util")
-				return util.root_pattern("package.json", "tsconfig.json")(fname)
+				return util.root_pattern("package.json")(fname)
 			end
 			local servers = {
 				-- clangd = {},
@@ -167,9 +167,10 @@ return {
 				--    https://github.com/pmizio/typescript-tools.nvim
 				--
 				-- But for many setups, the LSP (`tsserver`) will work just fine
-				--[[ eslint = {
+				eslint = {
 					root_dir = function(fname)
-						return get_root_dir(fname)
+						local t = get_root_dir(fname)
+						return t
 					end,
 					filetypes = {
 						"typescript",
@@ -180,14 +181,14 @@ return {
 						"javascript.jsx",
 					},
 					single_file_support = true,
-					on_attach = function(_, bufnr)
+					--[[ on_attach = function(_, bufnr)
 						vim.api.nvim_create_autocmd({ "BufWritePre", "BufWritePost" }, {
 							buffer = bufnr,
 							command = "EslintFixAll",
 						})
-					end,
-				}, ]]
-				ts_ls = {
+					end, ]]
+				},
+				vtsls = {
 					single_file_support = true,
 					settings = {
 						typescript = {
@@ -214,6 +215,33 @@ return {
 						},
 					},
 				},
+				-- ts_ls = {
+				-- 	single_file_support = true,
+				-- 	settings = {
+				-- 		typescript = {
+				-- 			inlayHints = {
+				-- 				includeInlayParameterNameHints = "all",
+				-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+				-- 				includeInlayFunctionParameterTypeHints = true,
+				-- 				includeInlayVariableTypeHints = true,
+				-- 				includeInlayPropertyDeclarationTypeHints = true,
+				-- 				includeInlayFunctionLikeReturnTypeHints = true,
+				-- 				includeInlayEnumMemberValueHints = true,
+				-- 			},
+				-- 		},
+				-- 		javascript = {
+				-- 			inlayHints = {
+				-- 				includeInlayParameterNameHints = "all",
+				-- 				includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+				-- 				includeInlayFunctionParameterTypeHints = true,
+				-- 				includeInlayVariableTypeHints = true,
+				-- 				includeInlayPropertyDeclarationTypeHints = true,
+				-- 				includeInlayFunctionLikeReturnTypeHints = true,
+				-- 				includeInlayEnumMemberValueHints = true,
+				-- 			},
+				-- 		},
+				-- 	},
+				-- },
 				html = { filetypes = { "html", "twig", "hbs" } },
 				cssls = {},
 				tailwindcss = {
@@ -254,15 +282,6 @@ return {
 							additionalValuesFilesGlobPattern = "values*.yaml",
 						},
 					},
-				},
-				biome = {
-					root_dir = function(fname)
-						local util = require("lspconfig.util")
-						local test = util.root_pattern("biome.json", "biome.jsonc")(fname) or util.path.dirname(fname)
-						print(test)
-
-						return test
-					end,
 				},
 				lua_ls = {
 					-- cmd = {...},
@@ -308,7 +327,6 @@ return {
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"sqlls",
-				"ts_ls",
 				"gopls",
 				"golangci-lint",
 				"stylua", -- Used to format Lua code
@@ -330,7 +348,8 @@ return {
 				"stylua", -- lua formatter
 				"hadolint",
 				"yamllint",
-				"biome",
+				"vtsls",
+				"eslint",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
