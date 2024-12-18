@@ -1,5 +1,21 @@
 return {
 	{
+		"saghen/blink.cmp",
+		dependencies = "rafamadriz/friendly-snippets",
+		version = "v0.*",
+		opts = {
+			keymap = { preset = "default" },
+
+			appearance = {
+				nerd_font_variant = "mono",
+				use_nvim_cmp_as_default = true,
+			},
+
+			signature = { enabled = true },
+		},
+		opts_extend = { "sources.default" },
+	},
+	--[[ {
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
 		dependencies = {
@@ -59,7 +75,7 @@ return {
 			options = vim.tbl_deep_extend("force", options, require("nvchad.cmp"))
 			cmp.setup(options)
 		end,
-	},
+	}, ]]
 	{
 		"windwp/nvim-autopairs",
 		event = { "InsertEnter" },
@@ -158,10 +174,10 @@ return {
 			conform.setup({
 				log_level = vim.log.levels.TRACE,
 				formatters_by_ft = {
-					javascript = { "eslint_d" },
+					--[[ javascript = { "eslint_d" },
 					typescript = { "eslint_d" },
 					javascriptreact = { "eslint_d" },
-					typescriptreact = { "eslint_d" },
+					typescriptreact = { "eslint_d" }, ]]
 					svelte = { "biome" },
 					css = { "prettier" },
 					json = { "prettier" },
@@ -177,11 +193,12 @@ return {
 					lsp_format = "fallback",
 					timeout_ms = 1000,
 				},
-				formatters = {
-					eslint = {
+				--[[ formatters = {
+					eslint_d = {
 						lsp_format = "prefer",
+						timeout_ms = 1500,
 					},
-				},
+				}, ]]
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
@@ -200,10 +217,10 @@ return {
 			local lint = require("lint")
 
 			lint.linters_by_ft = {
-				--[[ javascript = { "eslint_d" },
+				javascript = { "eslint_d" },
 				typescript = { "eslint_d" },
 				javascriptreact = { "eslint_d" },
-				typescriptreact = { "estlint_d" }, ]]
+				typescriptreact = { "estlint_d" },
 				svelte = { "eslint_d" },
 				yaml = { "yamllint" },
 				docker = { "hadolint" },
@@ -228,15 +245,15 @@ return {
 	},
 	{
 		"CopilotC-Nvim/CopilotChat.nvim",
-		branch = "canary",
+		branch = "main",
 		dependencies = {
 			{
 				"zbirenbaum/copilot.lua",
 				cmd = "Copilot",
 				build = ":Copilot auth",
 				opts = {
-					suggestion = { enabled = false },
-					panel = { enabled = false },
+					suggestion = { enabled = true },
+					panel = { enabled = true },
 					filetypes = {
 						markdown = true,
 						help = true,

@@ -1,17 +1,16 @@
 return {
-	"mg979/vim-visual-multi",
+	{
+		"mg979/vim-visual-multi",
+	},
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufreadPre", "BufNewFile" },
-		build = ":TSUpdate",
 		dependencies = {
+			build = ":TSUpdate",
 			"windwp/nvim-ts-autotag",
 		},
 		config = function()
-			local treesitter = require("nvim-treesitter.configs")
-
-			-- configure treesitter
-			treesitter.setup({
+			require("nvim-treesitter.configs").setup({
 				highlight = { enable = true },
 				indent = { enable = true },
 				autotag = { enable = true },
@@ -66,6 +65,15 @@ return {
 		"lewis6991/gitsigns.nvim",
 		event = { "BufReadPre", "BufNewFile" },
 		opts = {
+			current_line_blame = true,
+			current_line_blame_opts = {
+				virt_text = true,
+				virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
+				delay = 200,
+				ignore_whitespace = false,
+				virt_text_priority = 100,
+				use_focus = true,
+			},
 			on_attach = function(bufnr)
 				local gs = package.loaded.gitsigns
 
@@ -109,7 +117,6 @@ return {
 			end,
 		},
 	},
-	{ "echasnovski/mini-git", version = "*", main = "mini.git" },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
@@ -138,6 +145,9 @@ return {
       { "f",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },
       { "S",     mode = { "n", "x", "o" }, function() require("flash").treesitter() end,        desc = "Flash Treesitter" },
     },
+	},
+	{
+		"sindrets/diffview.nvim",
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-context",

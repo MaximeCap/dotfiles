@@ -91,6 +91,9 @@ return {
 			sources = { "filesystem", "buffers", "git_status" },
 			open_files_do_not_replace_types = { "terminal", "Trouble", "trouble", "qf", "Outline" },
 			filesystem = {
+				filtered_items = {
+					visible = true,
+				},
 				hijack_netrw_behavior = "open_current",
 				bind_to_cwd = false,
 				follow_current_file = { enabled = true },
@@ -258,6 +261,12 @@ return {
 					path_display = { "smart" },
 					layout_config = {
 						prompt_position = "top",
+					},
+				},
+				pickers = {
+					find_files = {
+						-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+						find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
 					},
 				},
 			})
