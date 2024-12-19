@@ -3,17 +3,31 @@ return {
 		"saghen/blink.cmp",
 		dependencies = "rafamadriz/friendly-snippets",
 		version = "v0.*",
-		opts = {
-			keymap = { preset = "default" },
-
-			appearance = {
-				nerd_font_variant = "mono",
-				use_nvim_cmp_as_default = true,
-			},
-
-			signature = { enabled = true },
-		},
 		opts_extend = { "sources.default" },
+		config = function()
+			local opts = {
+				keymap = { preset = "default" },
+
+				appearance = {
+					nerd_font_variant = "mono",
+					use_nvim_cmp_as_default = true,
+				},
+
+				completion = {
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 150,
+					},
+				},
+
+				signature = {
+					enabled = true,
+					border = "solid",
+				},
+			}
+			opts = vim.tbl_deep_extend("force", opts, require("nvchad.cmp"))
+			require("blink.cmp").setup(opts)
+		end,
 	},
 	{
 		"numToStr/Comment.nvim",
@@ -142,7 +156,13 @@ return {
 				cmd = "Copilot",
 				build = ":Copilot auth",
 				opts = {
-					suggestion = { enabled = true },
+					suggestion = {
+						enabled = true,
+						auto_trigger = true,
+						keymap = {
+							accept = "<C-Tab>",
+						},
+					},
 					panel = { enabled = true },
 					filetypes = {
 						markdown = true,

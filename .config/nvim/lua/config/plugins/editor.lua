@@ -1,5 +1,4 @@
 return {
-	{ "echasnovski/mini.statusline", version = false, config = true },
 	{
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
@@ -86,6 +85,10 @@ return {
       { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = true,
 	},
 	{
 		"kdheepak/lazygit.nvim",
