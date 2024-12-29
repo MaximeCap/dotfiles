@@ -3,6 +3,10 @@ return {
 	"nvim-lua/plenary.nvim",
 	"christoomey/vim-tmux-navigator",
 	{
+		"stevearc/dressing.nvim",
+		opts = {},
+	},
+	{
 		"nvchad/ui",
 		config = function()
 			require("nvchad")

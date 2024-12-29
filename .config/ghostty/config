@@ -1,0 +1,11 @@
+keybind = ctrl+n>l=new_split:right
+keybind = ctrl+n>j=new_split:down
+keybind = ctrl+e=new_split:down
+
+keybind = ctrl+shift+h=goto_split:left
+keybind = ctrl+shift+j=goto_split:bottom
+keybind = ctrl+shift+k=goto_split:top
+keybind = ctrl+shift+l=goto_split:right
+
+theme = catppuccin-mocha
+font-family = "JetBrainsMono NFM Bold"

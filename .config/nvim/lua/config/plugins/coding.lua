@@ -22,10 +22,9 @@ return {
 
 				signature = {
 					enabled = true,
-					border = "solid",
 				},
 			}
-			opts = vim.tbl_deep_extend("force", opts, require("nvchad.cmp"))
+			--opts = vim.tbl_deep_extend("force", opts, require("nvchad.cmp"))
 			require("blink.cmp").setup(opts)
 		end,
 	},
@@ -125,7 +124,7 @@ return {
 				typescript = { "eslint" },
 				javascriptreact = { "eslint" },
 				typescriptreact = { "eslint" },
-				svelte = { "eslint_d" },
+				svelte = { "eslint" },
 				yaml = { "yamllint" },
 				docker = { "hadolint" },
 				go = { "golangcilint" },
@@ -160,7 +159,7 @@ return {
 						enabled = true,
 						auto_trigger = true,
 						keymap = {
-							accept = "<C-Tab>",
+							accept = "<C-l>",
 						},
 					},
 					panel = { enabled = true },

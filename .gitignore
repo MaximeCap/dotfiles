@@ -4,3 +4,6 @@ brew/Brewfile.lock.json
 .config/linearmouse
 .config/neofetch
 .config/tmux/plugins/**
+.config/fish/completions/*
+
+**/*/.DS_Store
