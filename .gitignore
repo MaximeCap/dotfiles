@@ -7,3 +7,5 @@ brew/Brewfile.lock.json
 .config/fish/completions/*
 
 **/*/.DS_Store
+
+.config/*
