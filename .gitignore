@@ -1,3 +1,4 @@
+.config/*
 brew/Brewfile.lock.json
 .config/nvim/lazy-lock.json
 .config/github-copilot
@@ -5,7 +6,7 @@ brew/Brewfile.lock.json
 .config/neofetch
 .config/tmux/plugins/**
 .config/fish/completions/*
+.config/aerospace
 
 **/*/.DS_Store
 
-.config/*
