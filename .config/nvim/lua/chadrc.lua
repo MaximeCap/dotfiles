@@ -1,7 +1,7 @@
 local M = {}
 
 M.base46 = {
-	theme = "material-darker",
+	theme = "gruvchad",
 	transparency = true,
 }
 
