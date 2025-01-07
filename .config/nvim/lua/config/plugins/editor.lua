@@ -48,9 +48,11 @@ return {
 				pickers = {
 					find_files = {
 						theme = "ivy",
+						hidden = true,
 					},
 					live_grep = {
 						theme = "ivy",
+						hidden = true,
 					},
 				},
 			})
@@ -86,10 +88,7 @@ return {
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
 	},
-	{
-		"lewis6991/gitsigns.nvim",
-		config = true,
-	},
+	{ "echasnovski/mini.diff", version = false, config = true },
 	{
 		"kdheepak/lazygit.nvim",
 		cmd = {
@@ -115,5 +114,17 @@ return {
 		config = true,
 		-- use opts = {} for passing setup options
 		-- this is equivalent to setup({}) function
+	},
+	{
+		"ramilito/kubectl.nvim",
+		config = function(_, opts)
+			require("kubectl").setup(opts)
+			vim.keymap.set(
+				"n",
+				"<leader>k",
+				'<cmd>lua require("kubectl").toggle()<cr>',
+				{ noremap = true, silent = true }
+			)
+		end,
 	},
 }

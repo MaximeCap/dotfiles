@@ -1,5 +1,5 @@
-keybind = ctrl+n>l=new_split:right
-keybind = ctrl+n>j=new_split:down
+keybind = ctrl+super+l>l=new_split:right
+keybind = ctrl+super+l>j=new_split:down
 keybind = ctrl+e=new_split:down
 
 keybind = ctrl+shift+h=goto_split:left
