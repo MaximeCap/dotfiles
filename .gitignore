@@ -6,13 +6,18 @@ brew/Brewfile.lock.json
 .config/linearmouse
 .config/neofetch
 .config/tmux/plugins/**
-.config/fish/completions/*
 
 !.config/aerospace
 !.config/nvim
 !.config/ghostty
 !.config/starship.toml
 !.config/aerospace
+!.config/fish/config.fish
+!.config/fish/config.fish
+.config/fish/completions
+.config/fish/functions
+.config/fish/themes
+
 
 **/*/.DS_Store
 
