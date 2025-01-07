@@ -13,7 +13,6 @@ brew/Brewfile.lock.json
 !.config/starship.toml
 !.config/aerospace
 !.config/fish/config.fish
-!.config/fish/config.fish
 .config/fish/completions
 .config/fish/functions
 .config/fish/themes
