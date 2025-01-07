@@ -147,7 +147,37 @@ return {
 		end,
 	},
 	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		enabled = function()
+			local isThales = vim.fn.getenv("IS_THALES")
+
+			if isThales == "true" then
+				return false
+			else
+				return true
+			end
+		end,
+		build = ":Copilot auth",
+		opts = {
+			suggestion = {
+				enabled = true,
+				auto_trigger = true,
+				keymap = {
+					accept = "<C-CR>",
+				},
+			},
+			panel = { enabled = true },
+			filetypes = {
+				markdown = true,
+				help = true,
+				-- Add more filetypes as needed
+			},
+		},
+	},
+	--[[ {
 		"CopilotC-Nvim/CopilotChat.nvim",
+		event = "BufEnter",
 		branch = "main",
 		enabled = function()
 			local isThales = vim.fn.getenv("IS_THALES")
@@ -159,26 +189,6 @@ return {
 			end
 		end,
 		dependencies = {
-			{
-				"zbirenbaum/copilot.lua",
-				cmd = "Copilot",
-				build = ":Copilot auth",
-				opts = {
-					suggestion = {
-						enabled = true,
-						auto_trigger = true,
-						keymap = {
-							accept = "<C-CR>",
-						},
-					},
-					panel = { enabled = true },
-					filetypes = {
-						markdown = true,
-						help = true,
-						-- Add more filetypes as needed
-					},
-				},
-			},
 			{ "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
 		},
 		build = "make tiktoken", -- Only on MacOS or Linux
@@ -202,7 +212,7 @@ return {
 				})
 			end, { desc = "Open CopilotChat" })
 		end,
-	},
+	}, ]]
 	{
 		"milanglacier/minuet-ai.nvim",
 		enabled = function()
@@ -261,8 +271,6 @@ return {
 			if isThales == "true" then
 				adapterToUse = "ollama"
 			end
-
-			print(adapterToUse)
 
 			require("codecompanion").setup({
 				display = {

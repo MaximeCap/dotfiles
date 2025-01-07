@@ -18,3 +18,4 @@ zoxide init --cmd cd fish | source
 set -gx PATH $PATH $HOME/.krew/bin
 
 alias k="kubectl"
+alias n="nvim"
