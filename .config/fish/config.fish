@@ -19,3 +19,7 @@ set -gx PATH $PATH $HOME/.krew/bin
 
 alias k="kubectl"
 alias n="nvim"
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH

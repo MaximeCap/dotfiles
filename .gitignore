@@ -1,24 +1,31 @@
-.config/**/*
+**/.DS_Store
 
-brew/Brewfile.lock.json
-# .config/nvim/lazy-lock.json
-# .config/github-copilot
-# .config/linearmouse
-# .config/neofetch
-# .config/tmux/plugins/**
+.config/Autodesk
+.config/carapace
+.config/envman
+.config/fish/**/*
+.config/fish/fish_variables
 
+!.config/fish/fish.config
+
+.config/gcloud
+.config/github-copilot
+.config/karabiner
+.config/lazygit
+.config/neofetch
+.config/linearmouse
+.config/nix
+.config/nvim.bck
+.config/nvim.kickstarter
+.config/raycast
+.config/tmux
+
+# Unignore specific directories and files
 !.config/aerospace
-!.config/nvim
-!.config/ghostty
+!.config/ghostty/**/*
 !.config/starship.toml
 !.config/aerospace
 !.config/fish/config.fish
 
-# .config/fish/completions
-# .config/fish/functions
-# .config/fish/themes
-# .config/fish/fish_variables
-#
-
-**/*/.DS_Store
+!.config/nvim
 
