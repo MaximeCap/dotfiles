@@ -45,14 +45,35 @@ return {
 		config = function()
 			local builtin = require("telescope.builtin")
 			require("telescope").setup({
+				defaults = {
+					vimgrep_arguments = {
+						"rg",
+						"--color=never",
+						"--no-heading",
+						"--with-filename",
+						"--line-number",
+						"--column",
+						"--smart-case",
+					},
+					file_ignore_patterns = {
+						"node_modules/.*",
+						"%.git/.*",
+						"%.DS_Store",
+						"dist/.*",
+						"build/.*",
+						"%.lock",
+					},
+				},
 				pickers = {
 					find_files = {
 						--theme = "ivy",
 						hidden = true,
+						no_ignore = true,
 					},
 					live_grep = {
 						--theme = "ivy",
 						hidden = true,
+						no_ignore = true,
 					},
 				},
 			})
