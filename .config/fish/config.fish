@@ -3,8 +3,9 @@ set --export --prepend PATH "/Users/maxime.cappellen/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 fish_add_path /opt/homebrew/bin
 set -gx nvm_data /opt/homebrew/opt/nvm
+set --universal nvm_default_version lts/jod
 
-set -x IS_THALES false
+set -x IS_THALES true
 
 # Starship
 starship init fish | source
