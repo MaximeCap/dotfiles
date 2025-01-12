@@ -5,7 +5,28 @@ return {
 		config = function()
 			require("nvim-treesitter.configs").setup({
 				-- A list of parser names, or "all" (the listed parsers MUST always be installed)
-				ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+				ensure_installed = {
+					"c",
+					"lua",
+					"vim",
+					"vimdoc",
+					"query",
+					"markdown",
+					"markdown_inline",
+					"html",
+					"css",
+					"json",
+					"yaml",
+					"toml",
+					"javascript",
+					"typescript",
+					"tsx",
+					"svelte",
+					"graphql",
+					"dockerfile",
+					"jsonc",
+					"lua",
+				},
 				ignore_install = {},
 				modules = {},
 				-- Install parsers synchronously (only applied to `ensure_installed`)
@@ -30,6 +51,51 @@ return {
 					additional_vim_regex_highlighting = true,
 				},
 			})
+		end,
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		config = true,
+	},
+	{
+		"tris203/precognition.nvim",
+		config = true,
+	},
+	{
+		"smoka7/hop.nvim",
+		version = "*",
+		lazy = false,
+		opts = {
+			keys = "etovxqpdygfblzhckisuran",
+		},
+		config = function(_, opts)
+			local hop = require("hop")
+			hop.setup(opts)
+			local hop_hint = require("hop.hint")
+
+			vim.keymap.set("", "f", function()
+				---@diagnostic disable-next-line: missing-fields
+				return hop.hint_char1({
+					direction = hop_hint.HintDirection.AFTER_CURSOR,
+					current_line_only = true,
+				})
+			end, { remap = true })
+
+			vim.keymap.set("", "F", function()
+				---@diagnostic disable-next-line: missing-fields
+				return hop.hint_char1({
+					direction = hop_hint.HintDirection.BEFORE_CURSOR,
+					current_line_only = true,
+				})
+			end, { remap = true })
+
+			vim.keymap.set("", "<leader>h", function()
+				---@diagnostic disable-next-line: missing-fields
+				hop.hint_words({
+					direction = hop_hint.HintDirection.AFTER_CURSOR,
+					current_line_only = true,
+				})
+			end, { desc = "Hop word" })
 		end,
 	},
 	{
@@ -68,12 +134,10 @@ return {
 					find_files = {
 						--theme = "ivy",
 						hidden = true,
-						no_ignore = true,
 					},
 					live_grep = {
 						--theme = "ivy",
 						hidden = true,
-						no_ignore = true,
 					},
 				},
 			})
@@ -99,7 +163,7 @@ return {
 		version = "*",
 		config = true,
 	},
-	{
+	--[[ {
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		opts = {},
@@ -108,7 +172,7 @@ return {
       { "f", mode = { "n", "x", "o" }, function() require("flash").jump() end,       desc = "Flash" },
       { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
     },
-	},
+	} ]]
 	{ "echasnovski/mini.diff", version = false, config = true },
 	{
 		"kdheepak/lazygit.nvim",
@@ -153,6 +217,24 @@ return {
 		end,
 	},
 	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		},
+		keys = {
+			{
+				"<leader>?",
+				function()
+					require("which-key").show({ global = false })
+				end,
+				desc = "Buffer Local Keymaps (which-key)",
+			},
+		},
+	},
+	{
 		"folke/snacks.nvim",
 		priority = 1000,
 		lazy = false,
@@ -168,42 +250,18 @@ return {
 					enabled = true,
 					preset = {
 						header = [[
-██████████████████████████████████████████████████████████
-    ░░░░░░░░░░░  ▓                                        
-   █▒▒▒▒▒▒░░▒▒▒▓▓▒▓▓ ▓████░              ▓▒▒▒▒▓           
-   █▓▒▓▓▓▓▒▒▒▓▒▓▒▓██▒▒░░░░▒▒██  ░░░░░░░▒▓▓▓▒▓▓▓▓▓░░░▒▒▒░░ 
- ░ █▓▓▓▓▓▓▓▓▓▓▒▒▒█░░░▒▒▒▒▒▒▒░█░░░░░░ ░▓░▓▓▒▒▒▓▓▓░░▒▒░▒░░▒ 
- ░ ██▒▒▓▓▒▒░▒▓████▒░░▒▒▒▒▒▒▒░█░░░░░ ▒▒░▓▓▒▒▒▓▓█░░░░░▒░▒░▒ 
- ░  █▓▒▓▓█████░  ░▓░▒▒▒▒▒▒▒▒░█░░░░░█ ▒▓▓▒▒▒▓█ ▓ ░░░░▒░▒▒▒ 
- ░░ ██▓██▒      ░█▒░▒▒▒▒▒▒▒▒░█ ░  █ ▒█▓▒▒▒▓█ ░▒ ▒░▒▒▒▒▒▒▒ 
- ░░  ███     ▒░ ██░▒▒░▒▒▒▓█▓██ ░▒█ ▒█▓▒▒▓▓█░ █░░▒▒▒▒░▒▒▒▒ 
- ░░░  ██ ░██████▒▒░▒▓███▓ ░    ▓█ ▓█▓▓▒▒▓█░ █░░░▒▒▒▒░▒░▒▒ 
- ░░░   ███▓▓▒▓▓█▓▒██░         █ ░▒█▓▒▒▓▓█░  █░▒▒▒▒░▒▒▒░▒░ 
- ░░  ██▓▒▒▓▓▓▒█▓█     ░░░▒▓██ ▒ ▒▓▓▒▒▒▓█▒  █░░░░▒░░░▒▒▒▒▒ 
-   ░██▓▓▓▓▓▒▓██    ░░░░ ░    ▓ ▒█▓▒▒▒▓█░  ▓░ ░░░░▒▒▒░░▒▒▒ 
- ░██▓▓▓▓▓▓▒▓██   ░░░░░░░▒░ █  ▓█▓▒▒▒▓█▓   █ ░░░░░▒░▒░░▒▒▒ 
- █▓▓▓▓▓▓▓▒▓██  ░░░░░░░░░ ░░  ▓█▓▒▒▒▓█▓   █▒  ░░░░▒▒░▒░▒▒▒ 
- ▓▓▓▓▓▒▒▓▓▒█  ░░░░░░░░░░░░░ ▓█▓▒▒▓▓█▓  ▒▒ ██  ░░▒▒▒░▒▒▒▒▒ 
- ▓▓▓▓▓████▓█  ░░░░░░░░░░░  ▓█▓▒▒▒▓█▒░  ▒█ ▓██▓ ░░▒▒░▒▒░░▒ 
- ▓▓▒▓█▒   ██  ░░░░░░░░░░  ▓█▓▒▒▒▓█   ░▓█  ░   ▓  ░░▒▒▒▒▒▒ 
-░█▓▓█▓ ░░ ▒█  ░   ░░░▒░  ▓█▓▒▒▒▓█░ ░░░ ▓  ▒█████▓░░░▒▒░▒░ 
- ░██▒  ░░ ██  ░░  ▒     ▓█▓▒▒▒▓█░ ░░░░░▒  ██▒   ▓▓▒░░▒░▒░ 
-   █  ░▒▒ ███    █  ▒▓ ▓█▓▒▒▒▓█░ ░░ ░░░  █        █░░▒▒▒░ 
-▒██  ░▒▒░ ▒███  █▒▓▓█ ▓█▓▒▒▒▓█░ ░░░▒░   ███  ░░░░  █░▒░▒▒ 
-██  ▒▒░░░     █▒▒▒▒▒ ▒█▓▒▒▒▓█▒  ░░    ██████   ░▒░ █ ▒▒▒░ 
-█  ░░░░░░▒░░░  █▒░░▓▒▓▓▒▒▒▓█       ░██▒░ ███ ░ █ ░ █░░▒░░ 
-      ░░▒░░░  █▒▒▒▒█▒▓▒▒▒▓█ ░▒▓████▒▒░█░    █  █ ░  ▓░▒▒▒ 
- ██▓█░▒░  ░░░█▒░▒░▓▒▒▒▒▒▓█░    ▓  █▒▒░█ ░░  █▒█░▒▒ ░▓░▒░▒ 
-    █░▒▒▒▒░ ▓█░▒▒▓▓▓▒▒▓▓█    ██░ ▒█▒▒▒▓ ░ ▓█  ░ █  █░░░░▒ 
- ▓█░░ ░░░░ ▒█░▒▒▒▒▓▒▒▒▓█   ▒█░░  █▒░▒▒▒ ░▒█ █▒ █  █▒░▒▒▒▒ 
- ░░░▒░░░░░▓█░▒▒▓▓▓▒▒▒▓▓  ██▒░░░  █░▒▒▓█▒  ░█  █▒ █▓░░▒▒▒▒ 
-  █░░░░▒█▒█░░▒▓▓▓▒▒▒▓▓░█▓█░░░░  ██░▒▒▒▒█▒  ▒██░░▒░░░▒▒▒▒▒ 
-  █▓░▒█▒▒█░░▒▓▒▓▒▒▒▓██    ░░▒░ █▒▒░▒▒▓░░█░ ░░░░░▒░▒▒░▒░▒▒ 
-   ░█▒▒░░░░▒▓▒▓▒▒▓▓█░  ░░░▒░░ ▓█░▒▒▒▒▒▒▒░█░░░░▒░▒▒▒░▒░▒▒▒ 
- ░█▒▒░▒▒▒▒▒▓▓▓▒▒▒▓▓░ ░░▒░░▒░░ █▒▒▒▒▒▒▒▒▒░█▓ ░▒▒░░▒▒░▒▒▒▒░ 
- ░░░░░░░░░▒▒▒▒▒▒▒▓            █░░░░░░░░░░░█     ░░░░░▒░░  
-         ░▒░░░░░░             ░            ▒              
-██████████████████ Stonks the Productivity ███████████████
+                                     ,
+              ,-.       _,---._ __  / \
+             /  )    .-'       `./ /   \
+            (  (   ,'            `/    /|
+             \  `-"             \'\   / |
+              `.              ,  \ \ /  |
+               /`.          ,'-`----Y   |
+              (            ;        |   '
+              |  ,-.    ,-'         |  / 
+              |  | (   |        hjw | /  
+              )  |  \  `.___________|/   
+              `--'   `--'                
             ]],
 					},
 				},

@@ -20,6 +20,13 @@ return {
 					},
 				},
 
+				sources = {
+					default = {
+						"lsp",
+						"path",
+					},
+				},
+
 				signature = {
 					enabled = true,
 				},
@@ -78,9 +85,9 @@ return {
 				log_level = vim.log.levels.TRACE,
 				formatters_by_ft = {
 					--[[ javascript = { "eslint_d" },
-	    typescript = { "eslint_d" },
-	    javascriptreact = { "eslint_d" },
-	    typescriptreact = { "eslint_d" }, ]]
+					typescript = { "eslint_d" },
+					javascriptreact = { "eslint_d" },
+					typescriptreact = { "eslint_d" }, ]]
 					svelte = { "biome" },
 					css = { "prettier" },
 					json = { "prettier" },
@@ -94,7 +101,7 @@ return {
 				},
 				format_on_save = {
 					lsp_format = "fallback",
-					timeout_ms = 1000,
+					timeout_ms = 5000,
 				},
 				--[[ formatters = {
 	eslint_d = {
@@ -105,6 +112,7 @@ return {
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
+				print("formatting")
 				conform.format({
 					lsp_format = "fallback",
 					async = true,
@@ -132,7 +140,7 @@ return {
 
 			local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
-			vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
+			vim.api.nvim_create_autocmd({ "BufWritePost", "InsertLeave" }, {
 				group = lint_augroup,
 				callback = function()
 					local get_clients = vim.lsp.get_clients
@@ -149,6 +157,7 @@ return {
 	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
+		event = "InsertEnter",
 		enabled = function()
 			local isThales = vim.fn.getenv("IS_THALES")
 
@@ -171,6 +180,7 @@ return {
 			filetypes = {
 				markdown = true,
 				help = true,
+				["*"] = true,
 				-- Add more filetypes as needed
 			},
 		},
