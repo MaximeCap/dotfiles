@@ -12,8 +12,8 @@ M.ui = {
 		enabled = false,
 	},
 	cmp = {
-		lspkind_text = false,
-		style = "flat_dark", -- default/flat_light/flat_dark/atom/atom_colored
+		lspkind_text = true,
+		style = "default", -- default/flat_light/flat_dark/atom/atom_colored
 		format_colors = {
 			tailwind = false,
 		},

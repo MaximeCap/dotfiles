@@ -4,6 +4,11 @@ set --export --prepend PATH "/Users/maxime.cappellen/.rd/bin"
 fish_add_path /opt/homebrew/bin
 set -gx nvm_data /opt/homebrew/opt/nvm
 set --universal nvm_default_version lts/jod
+set -x GOROOT  /opt/homebrew/bin/go
+set -x PATH $PATH $GOROOT/bin
+
+set -x GOPATH $HOME/go
+set -x PATH $PATH $GOPATH/bin
 
 set -x IS_THALES true
 

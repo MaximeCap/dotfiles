@@ -16,9 +16,12 @@ return {
 			},
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			"saghen/blink.cmp",
+			-- "saghen/blink.cmp",
+			"yioneko/nvim-vtsls",
+			"hrsh7th/cmp-nvim-lsp",
 		},
 		config = function()
+			local cmp_nvim_lsp = require("cmp_nvim_lsp")
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("CustomLspAttach", { clear = true }),
 				callback = function(event)
@@ -97,13 +100,21 @@ return {
 				end,
 			})
 
-			local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+			--local capabilities = require("blink.cmp").get_lsp_capabilities(vim.lsp.protocol.make_client_capabilities())
+			local capabilities = cmp_nvim_lsp.default_capabilities()
 
 			local servers = {
 				lua_ls = {},
 				gopls = {},
 				vtsls = {},
+				emmet_ls = {
+					enabled = false,
+				},
 				eslint = {
+					settings = {
+						autoFixOnSave = true,
+						format = true,
+					},
 					filetypes = {
 						"typescript",
 						"javascript",

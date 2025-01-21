@@ -58,10 +58,6 @@ return {
 		config = true,
 	},
 	{
-		"tris203/precognition.nvim",
-		config = true,
-	},
-	{
 		"smoka7/hop.nvim",
 		version = "*",
 		lazy = false,
