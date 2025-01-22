@@ -9,3 +9,5 @@ keybind = ctrl+shift+l=goto_split:right
 
 theme = GruvboxDark
 font-family = "JetBrainsMono NFM Bold"
+background-opacity = 0.9
+background-blur-radius = 30

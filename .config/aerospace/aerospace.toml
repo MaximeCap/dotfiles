@@ -166,6 +166,12 @@ alt-shift-x = 'move-node-to-workspace X'
 alt-shift-y = 'move-node-to-workspace Y'
 alt-shift-z = 'move-node-to-workspace Z'
 
+[workspace-to-monitor-force-assignment]
+T = 'main' # Terminal
+B = 'secondary' # Browser
+C = 'secondary' # Chat (Teams, Discord)
+F = 'main' # Figma
+
 alt-shift-f = 'fullscreen'
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'

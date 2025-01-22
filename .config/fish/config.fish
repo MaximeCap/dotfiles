@@ -25,6 +25,8 @@ set -gx PATH $PATH $HOME/.krew/bin
 
 alias k="kubectl"
 alias n="nvim"
+alias l="ll"
+alias lg="lazygit"
 
 # bun
 set --export BUN_INSTALL "$HOME/.bun"

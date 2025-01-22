@@ -56,6 +56,43 @@ return {
 
 			cmp.setup(opts)
 		end,
+},
+{
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
+		keys = {
+			{
+				"<leader>xx",
+				"<cmd>Trouble diagnostics toggle<cr>",
+				desc = "Diagnostics (Trouble)",
+			},
+			{
+				"<leader>xX",
+				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+				desc = "Buffer Diagnostics (Trouble)",
+			},
+			{
+				"<leader>cs",
+				"<cmd>Trouble symbols toggle focus=false<cr>",
+				desc = "Symbols (Trouble)",
+			},
+			{
+				"<leader>cl",
+				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+				desc = "LSP Definitions / references / ... (Trouble)",
+			},
+			{
+				"<leader>xL",
+				"<cmd>Trouble loclist toggle<cr>",
+				desc = "Location List (Trouble)",
+			},
+			{
+				"<leader>xQ",
+				"<cmd>Trouble qflist toggle<cr>",
+				desc = "Quickfix List (Trouble)",
+			},
+		},
 	},
 	{
 		"saghen/blink.cmp",
@@ -194,7 +231,9 @@ return {
 				callback = function()
 					local get_clients = vim.lsp.get_clients
 					local client = get_clients({ bufnr = 0 })[1] or {}
-					lint.try_lint(nil, { cwd = client.root_dir })
+					if client.name ~= "vtsls" then
+						lint.try_lint(nil, { cwd = client.root_dir })
+					end
 				end,
 			})
 
@@ -303,7 +342,7 @@ return {
 				provider_options = {
 					openai_fim_compatible = {
 						model = "qwen2.5-coder:1.5b-base",
-						end_point = "http://192.168.6.54:11434/v1/completions",
+						end_point = "http://localhost:11434/v1/completions",
 						name = "Ollama",
 						stream = true,
 						api_key = "IS_THALES",
