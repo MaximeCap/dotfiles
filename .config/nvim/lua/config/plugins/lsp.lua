@@ -16,9 +16,9 @@ return {
 			},
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
-			"saghen/blink.cmp",
-			"yioneko/nvim-vtsls",
 			"nanotee/sqls.nvim",
+			"hrsh7th/cmp-nvim-lsp",
+			"towolf/vim-helm",
 		},
 		config = function()
 			local cmp_nvim_lsp = require("cmp_nvim_lsp")
@@ -105,9 +105,30 @@ return {
 
 			local servers = {
 				lua_ls = {},
-				gopls = {},
-				sqls = {},
 				ts_ls = {},
+				["helm-ls"] = {
+					logLevel = "info",
+					valuesFiles = {
+						mainValuesFile = "values.yaml",
+						lintOverlayValuesFile = "values.lint.yaml",
+						additionalValuesFilesGlobPattern = "values*.yaml",
+					},
+					yamlls = {
+						enabled = true,
+						enabledForFilesGlob = "*.{yaml,yml}",
+						diagnosticsLimit = 50,
+						showDiagnosticsDirectly = false,
+						path = "yaml-language-server",
+						config = {
+							schemas = {
+								kubernetes = "templates/**",
+							},
+							completion = true,
+							hover = true,
+							-- any other config from https://github.com/redhat-developer/yaml-language-server#language-server-settings
+						},
+					},
+				},
 				eslint = {
 					settings = {
 						autoFixOnSave = true,
@@ -122,6 +143,8 @@ return {
 						"javascript.jsx",
 					},
 				},
+				gopls = {},
+				sqls = {},
 			}
 
 			require("mason").setup()
@@ -155,7 +178,9 @@ return {
 				"yamllint",
 				"ts_ls",
 				"eslint",
+				"gopls",
 				"sqls",
+				"sqlls",
 			})
 
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
@@ -170,6 +195,21 @@ return {
 						-- by the server configuration above. Useful when disabling
 						-- certain features of an LSP (for example, turning off formatting for tsserver)
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+						server.on_attach = function(_, bufnr)
+							require("better-diagnostic-virtual-text.api").setup_buf(bufnr, {
+								ui = {
+									wrap_line_after = false, -- wrap the line after this length to avoid the virtual text is too longw
+									left_kept_space = 3, --- the number of spaces kept on the left side of the virtual text, make sure it enough to custom for each line
+									right_kept_space = 3, --- the number of spaces kept on the right side of the virtual text, make sure it enough to custom for each line
+									arrow = "  ",
+									up_arrow = "  ",
+									down_arrow = "  ",
+									above = true, -- the virtual text will be displayed above the line
+								},
+								priority = 2003, -- the priority of virtual text
+								inline = false,
+							})
+						end
 						if server_name == "sqls" then
 							require("lspconfig").sqls.setup({
 								on_attach = function(client, bufnr)

@@ -2,12 +2,15 @@
 set --export --prepend PATH "/Users/maxime.cappellen/.rd/bin"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 fish_add_path /opt/homebrew/bin
+fish_add_path /opt/podman/bin
+
+fish_add_path /usr/local/bin
 set -gx nvm_data /opt/homebrew/opt/nvm
 set --universal nvm_default_version lts/jod
-set -x GOROOT  /opt/homebrew/bin/go
+set -x GOROOT "$(brew --prefix golang)/libexec"
 set -x PATH $PATH $GOROOT/bin
 
-set -x GOPATH $HOME/go
+set -x GOPATH $HOME/golang
 set -x PATH $PATH $GOPATH/bin
 
 set -x IS_THALES true

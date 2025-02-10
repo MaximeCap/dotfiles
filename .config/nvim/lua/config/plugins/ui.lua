@@ -1,7 +1,12 @@
 return {
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 	"nvim-lua/plenary.nvim",
-	"christoomey/vim-tmux-navigator",
+	{
+		"aserowy/tmux.nvim",
+		config = function()
+			return require("tmux").setup()
+		end,
+	},
 	{
 		"stevearc/dressing.nvim",
 		opts = {},

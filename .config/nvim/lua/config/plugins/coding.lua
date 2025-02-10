@@ -1,5 +1,22 @@
 return {
 	{
+		"sontungexpt/better-diagnostic-virtual-text",
+		lazy = true,
+		opts = {
+			ui = {
+				wrap_line_after = true, -- wrap the line after this length to avoid the virtual text is too longw
+				left_kept_space = 3, --- the number of spaces kept on the left side of the virtual text, make sure it enough to custom for each line
+				right_kept_space = 3, --- the number of spaces kept on the right side of the virtual text, make sure it enough to custom for each line
+				arrow = "  ",
+				up_arrow = "  ",
+				down_arrow = "  ",
+				above = true, -- the virtual text will be displayed above the line
+			},
+			priority = 2003, -- the priority of virtual text
+			inline = true,
+		},
+	},
+	{
 		"hrsh7th/nvim-cmp",
 		enabled = true,
 		event = "InsertEnter",
@@ -56,8 +73,8 @@ return {
 
 			cmp.setup(opts)
 		end,
-},
-{
+	},
+	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
@@ -170,10 +187,10 @@ return {
 			conform.setup({
 				log_level = vim.log.levels.TRACE,
 				formatters_by_ft = {
-					--[[ javascript = { "eslint_d" },
-					typescript = { "eslint_d" },
-					javascriptreact = { "eslint_d" },
-					typescriptreact = { "eslint_d" }, ]]
+					javascript = { "prettier" },
+					typescript = { "prettier" },
+					javascriptreact = { "prettier" },
+					typescriptreact = { "prettier" },
 					svelte = { "biome" },
 					css = { "prettier" },
 					json = { "prettier" },
@@ -189,12 +206,6 @@ return {
 					lsp_format = "fallback",
 					timeout_ms = 5000,
 				},
-				--[[ formatters = {
-	eslint_d = {
-	lsp_format = "prefer",
-	timeout_ms = 1500,
-	},
-	}, ]]
 			})
 
 			vim.keymap.set({ "n", "v" }, "<leader>cf", function()
@@ -220,6 +231,7 @@ return {
 				typescriptreact = { "eslint" },
 				svelte = { "eslint" },
 				yaml = { "yamllint" },
+				helm = { "yamllint" },
 				docker = { "hadolint" },
 				go = { "golangcilint" },
 			}
@@ -357,7 +369,6 @@ return {
 	},
 	{
 		"olimorris/codecompanion.nvim",
-		enabled = true,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
