@@ -18,9 +18,10 @@
 .config/nvim.bck
 .config/nvim.kickstarter
 .config/raycast
-.config/tmux
+.config/tmux/plugins
 .config/containers
 .config/configstore
+.config/kn
 
 # Unignore specific directories and files
 !.config/aerospace
