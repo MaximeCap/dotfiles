@@ -1,34 +1,28 @@
 return {
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = "InsertEnter",
-    enabled = function()
-      local isThales = vim.fn.getenv("IS_THALES")
-
-      if isThales == "true" then
-        return false
-      else
-        return true
-      end
-    end,
-    build = ":Copilot auth",
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    lazy = false,
+    enabled = false,
+    version = "*",
     opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = "<C-CR>",
+      provider = "thales-llma",
+      vendors = {
+        ["local-llma"] = {
+          __inherited_from = "openai",
+          endpoint = "http://localhost:11434/v1",
+          model = "llama3.2:3b", -- The model name to use with this provider
+          api_key_name = "IS_THALES",
+        },
+        ["thales-llma"] = {
+          __inherited_from = "openai",
+          endpoint = "http://localhost:11434/v1",
+          model = "llama3.1:8b",
+          api_key_name = "",
         },
       },
-      panel = { enabled = true },
-      filetypes = {
-        markdown = true,
-        help = true,
-        ["*"] = true,
-        -- Add more filetypes as needed
-      },
     },
+    build = "make",
   },
   {
     "milanglacier/minuet-ai.nvim",
@@ -73,6 +67,37 @@ return {
         },
       })
     end,
+  },
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    enabled = function()
+      local isThales = vim.fn.getenv("IS_THALES")
+
+      if isThales == "true" then
+        return false
+      else
+        return true
+      end
+    end,
+    build = ":Copilot auth",
+    opts = {
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = "<C-CR>",
+        },
+      },
+      panel = { enabled = true },
+      filetypes = {
+        markdown = true,
+        help = true,
+        ["*"] = true,
+        -- Add more filetypes as needed
+      },
+    },
   },
   {
     "olimorris/codecompanion.nvim",
