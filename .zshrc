@@ -81,7 +81,7 @@ setopt hist_find_no_dups
 # zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # go
-export GOPATH=$HOME/golang
+export GOPATH=$HOME/go
 export GOROOT="$(brew --prefix golang)/libexec"
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
@@ -115,8 +115,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/Users/maxime.cappellen.e/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-export IS_THALES=true
-
+export IS_THALES=false
 
 # alias
 alias k="kubectl"
