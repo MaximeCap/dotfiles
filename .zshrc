@@ -37,6 +37,7 @@ zinit snippet OMZP::kubectl
 zinit snippet OMZP::kubectx
 
 # Load completions
+fpath=(~/.zsh/completions $fpath)
 autoload -Uz compinit && compinit
 
 zinit cdreplay -q
@@ -100,7 +101,7 @@ export NVM_DIR="$HOME/.nvm"
 export PATH="/Users/maxime.cappellen.e/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-export IS_THALES=true
+export IS_THALES=false
 
 
 # alias
